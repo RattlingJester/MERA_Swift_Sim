@@ -1,0 +1,32 @@
+motion_instruction = {
+    "dsID":"www.hc-system.com.HCRemoteCommand",
+    "reqType": "AddRCC",
+    "emptyList":"0",
+    "packID": "0",
+    "instructions":
+    [
+        {
+            "oneshot":"1",
+            "action":"4",
+            "m0":"0.000",
+            "m1":"0.000",
+            "m2":"0.000",
+            "m3":"0.000",
+            "m4":"0.000",
+            "m5":"90.000",
+            "ckStatus": "0x3F",
+            "speed":"80.0",
+            "delay":"0.1",
+            "coord":"0",
+            "tool":"0",
+            "smooth":"0"
+        }
+    ]
+}
+
+version_query = {
+    "dsID" : "www.hc-system.com.RemoteMonitor",
+    "reqType": "query",
+    "packID": "0",
+    "queryAddr":["version", "curMold"]
+}

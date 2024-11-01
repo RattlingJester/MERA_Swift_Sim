@@ -235,7 +235,7 @@ class Ui_MainWindow(object):
 
         self.frame_JogSwitch = QFrame(self.tab_main)
         self.frame_JogSwitch.setObjectName(u"frame_JogSwitch")
-        self.frame_JogSwitch.setGeometry(QRect(10, 20, 211, 71))
+        self.frame_JogSwitch.setGeometry(QRect(10, 20, 205, 70))
         self.frame_JogSwitch.setFrameShape(QFrame.Shape.Box)
         self.frame_JogSwitch.setFrameShadow(QFrame.Shadow.Raised)
         self.gridLayout_2 = QGridLayout(self.frame_JogSwitch)
@@ -253,16 +253,6 @@ class Ui_MainWindow(object):
 
         self.gridLayout_2.addWidget(self.TrajectoryMotionButton, 1, 1, 1, 1)
 
-        self.JointJogButton = QRadioButton(self.frame_JogSwitch)
-        self.JointJogButton.setObjectName(u"JointJogButton")
-        sizePolicy2.setHeightForWidth(self.JointJogButton.sizePolicy().hasHeightForWidth())
-        self.JointJogButton.setSizePolicy(sizePolicy2)
-        self.JointJogButton.setFont(font1)
-        self.JointJogButton.setCheckable(True)
-        self.JointJogButton.setChecked(False)
-
-        self.gridLayout_2.addWidget(self.JointJogButton, 1, 0, 1, 1)
-
         self.MotionType_label = QLabel(self.frame_JogSwitch)
         self.MotionType_label.setObjectName(u"MotionType_label")
         sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Maximum)
@@ -273,7 +263,17 @@ class Ui_MainWindow(object):
         self.MotionType_label.setFont(font)
         self.MotionType_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.gridLayout_2.addWidget(self.MotionType_label, 0, 0, 1, 2)
+        self.gridLayout_2.addWidget(self.MotionType_label, 0, 0, 1, 1)
+
+        self.JointJogButton = QRadioButton(self.frame_JogSwitch)
+        self.JointJogButton.setObjectName(u"JointJogButton")
+        sizePolicy2.setHeightForWidth(self.JointJogButton.sizePolicy().hasHeightForWidth())
+        self.JointJogButton.setSizePolicy(sizePolicy2)
+        self.JointJogButton.setFont(font1)
+        self.JointJogButton.setCheckable(True)
+        self.JointJogButton.setChecked(False)
+
+        self.gridLayout_2.addWidget(self.JointJogButton, 1, 0, 1, 1)
 
         self.frame_CartesianCoordinates = QFrame(self.tab_main)
         self.frame_CartesianCoordinates.setObjectName(u"frame_CartesianCoordinates")
@@ -456,11 +456,11 @@ class Ui_MainWindow(object):
         self.SendButton.setFont(font4)
         self.LaunchButton = QPushButton(self.tab_main)
         self.LaunchButton.setObjectName(u"LaunchButton")
-        self.LaunchButton.setGeometry(QRect(30, 170, 161, 41))
+        self.LaunchButton.setGeometry(QRect(40, 210, 161, 41))
         self.LaunchButton.setFont(font4)
         self.layoutWidget7 = QWidget(self.tab_main)
         self.layoutWidget7.setObjectName(u"layoutWidget7")
-        self.layoutWidget7.setGeometry(QRect(50, 100, 121, 61))
+        self.layoutWidget7.setGeometry(QRect(60, 140, 121, 61))
         self.TrajectoryType_layout = QVBoxLayout(self.layoutWidget7)
         self.TrajectoryType_layout.setObjectName(u"TrajectoryType_layout")
         self.TrajectoryType_layout.setContentsMargins(0, 0, 0, 0)
@@ -919,6 +919,23 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_7.addWidget(self.TCP_Connect_button)
 
+        self.frame = QFrame(self.tab_main)
+        self.frame.setObjectName(u"frame")
+        self.frame.setGeometry(QRect(10, 95, 205, 45))
+        self.frame.setFrameShape(QFrame.Shape.Box)
+        self.frame.setFrameShadow(QFrame.Shadow.Raised)
+        self.gridLayout_6 = QGridLayout(self.frame)
+        self.gridLayout_6.setObjectName(u"gridLayout_6")
+        self.BorunteSwitch_radioButton = QRadioButton(self.frame)
+        self.BorunteSwitch_radioButton.setObjectName(u"BorunteSwitch_radioButton")
+
+        self.gridLayout_6.addWidget(self.BorunteSwitch_radioButton, 0, 0, 1, 1)
+
+        self.SimulatorSwitch_radioButton = QRadioButton(self.frame)
+        self.SimulatorSwitch_radioButton.setObjectName(u"SimulatorSwitch_radioButton")
+
+        self.gridLayout_6.addWidget(self.SimulatorSwitch_radioButton, 0, 1, 1, 1)
+
         self.tabWidget.addTab(self.tab_main, "")
         self.tab_config = QWidget()
         self.tab_config.setObjectName(u"tab_config")
@@ -971,8 +988,8 @@ class Ui_MainWindow(object):
         self.Axis6.setSuffix(QCoreApplication.translate("MainWindow", u"\u00ba", None))
         self.Axis6Label.setText(QCoreApplication.translate("MainWindow", u"Axis 6", None))
         self.TrajectoryMotionButton.setText(QCoreApplication.translate("MainWindow", u"Trajectory", None))
-        self.JointJogButton.setText(QCoreApplication.translate("MainWindow", u"Joint jog", None))
         self.MotionType_label.setText(QCoreApplication.translate("MainWindow", u"Motion type:", None))
+        self.JointJogButton.setText(QCoreApplication.translate("MainWindow", u"Joint jog", None))
         self.cart_Rz_SpinBox_label.setText(QCoreApplication.translate("MainWindow", u"Rz", None))
         self.cart_Rz_SpinBox.setSuffix(QCoreApplication.translate("MainWindow", u"\u00ba", None))
         self.cart_Y_doubleSpinBox_label.setText(QCoreApplication.translate("MainWindow", u"Y", None))
@@ -1025,6 +1042,8 @@ class Ui_MainWindow(object):
         self.TCP_host_port_label.setText(QCoreApplication.translate("MainWindow", u"Remote Host Port:", None))
         self.TCP_host_port_lineEdit.setText(QCoreApplication.translate("MainWindow", u"502", None))
         self.TCP_Connect_button.setText(QCoreApplication.translate("MainWindow", u"Connect", None))
+        self.BorunteSwitch_radioButton.setText(QCoreApplication.translate("MainWindow", u"Borunte", None))
+        self.SimulatorSwitch_radioButton.setText(QCoreApplication.translate("MainWindow", u"Simulator", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_main), QCoreApplication.translate("MainWindow", u"Movement", None))
         self.LangChange_comboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"English", None))
         self.LangChange_comboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"\u0420\u0443\u0441\u0438\u044f\u043d\u0441\u043a\u0438\u0439", None))

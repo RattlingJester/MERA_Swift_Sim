@@ -1,11 +1,10 @@
-import sys
-from math import degrees, radians
-import time
-
 import json
-import qdarktheme
 import socket
+import sys
+import time
+from math import degrees, radians
 
+import qdarktheme
 from PySide6 import QtWidgets
 from PySide6.QtCore import QLocale
 from spatialmath import SE3, SO3
@@ -59,34 +58,39 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Костыли:
         self.ui.TrajectoryMotionButton.toggle()
+        self.ui.SimulatorSwitch_radioButton.toggle()
         self.ui.Velocity_label.setText(str(self.ui.Velocity_slider.value()) + " %")
+        self.connected = False
 
         # TCP UI:
         self.ui.TCP_Connect_button.clicked.connect(self.TCPConnect)
 
     def TCPConnect(self):
-        tcp_client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        tcp_client.settimeout(0.5)
+        if self.connected == False:
+            self.tcp_client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.tcp_client.settimeout(0.5)
 
-        host_addr = self.ui.TCP_host_addr_lineEdit.text()
-        host_port = int(self.ui.TCP_host_port_lineEdit.text())
+            host_addr = self.ui.TCP_host_addr_lineEdit.text()
+            host_port = int(self.ui.TCP_host_port_lineEdit.text())
+            self.tcp_client.connect((host_addr, host_port))
 
-        tcp_client.connect((host_addr, host_port))
+            self.ui.TCP_Connect_button.setText("Disconnect")
+            self.ui.TCP_Connect_button.setStyleSheet("background-color : rgb(0,255,0); Font : bold")
+            self.connected = True
 
-        version_query = {
-            "dsID" : "www.hc-system.com.RemoteMonitor",
-            "reqType": "query",
-            "packID": "0",
-            "queryAddr":["version", "curMold"]
-        }
+        else:
+            self.tcp_client.close()
+            self.ui.TCP_Connect_button.setText("Connect")
+            self.ui.TCP_Connect_button.setStyleSheet("background-color : rgb(255,0,0); Font : bold")
+            self.connected = False
 
-        json_string = json.dumps(version_query)
-
-        text = json_string.encode(encoding='ascii')
-        tcp_client.sendall(text)
-
-        reply = tcp_client.recv(256)
-        self.ConsolePrint(reply.decode(encoding='ascii'))
+    def TCP_send(self, instructions: dict):
+        if hasattr(self, "tcp_client"):
+            json_string = json.dumps(instructions)
+            text = json_string.encode(encoding='ascii')
+            self.tcp_client.sendall(text)
+            reply = self.tcp_client.recv(128)
+            self.ConsolePrint(reply.decode(encoding='ascii'))
 
     def LaunchSim(self):
         sim_swift.StartSwift()
@@ -97,28 +101,60 @@ class MainWindow(QtWidgets.QMainWindow):
         cartGain = self.ui.Velocity_slider.value() / 100
 
         if self.ui.JointJogButton.isChecked():
-            self.ConsolePrint(f"{time.localtime()[3]}:{time.localtime()[4]}\t jog\t vel: {round(degrees(min(maxVel)))} deg / s")
-            sim_swift.SwiftVisualise(sim_swift.JointJog([
-                radians(self.ui.Axis1.value()),
-                radians(self.ui.Axis2.value()),
-                radians(self.ui.Axis3.value()),
-                radians(self.ui.Axis4.value()),
-                radians(self.ui.Axis5.value()),
-                radians(self.ui.Axis6.value()),
-            ], maxVel))
+            if self.ui.SimulatorSwitch_radioButton.isChecked():
+                self.ConsolePrint(f"{time.localtime()[3]}:{time.localtime()[4]}\t jog\t vel: {round(degrees(min(maxVel)))} deg / s")
+                sim_swift.SwiftVisualise(sim_swift.JointJog([
+                    radians(self.ui.Axis1.value()),
+                    radians(self.ui.Axis2.value()),
+                    radians(self.ui.Axis3.value()),
+                    radians(self.ui.Axis4.value()),
+                    radians(self.ui.Axis5.value()),
+                    radians(self.ui.Axis6.value()),
+                ], maxVel))
+            else:
+                memory_write = {
+                    "dsID":"www.hc-system.com.RemoteMonitor",
+                    "reqType": "command",
+                    "cmdData":
+                            ["rewriteDataList", "800","6","0", 
+                                str(self.ui.Axis1.value() * 1000), 
+                                str(self.ui.Axis2.value() * 1000), 
+                                str(self.ui.Axis3.value() * 1000), 
+                                str(self.ui.Axis4.value() * 1000), 
+                                str(self.ui.Axis5.value() * 1000), 
+                                str(self.ui.Axis6.value() * 1000)
+                            ]
+                }
+                self.TCP_send(memory_write)
         else:
-            if self.ui.TrajectoryType_comboBox.currentText() == "jtraj":
-                self.ConsolePrint(f"{time.localtime()[3]}:{time.localtime()[4]}\t jtraj\t vel: {round(degrees(min(maxVel)))} deg / s")
-                sim_swift.SwiftVisualise(sim_swift.JointTrajectory(sim_swift.robot.fkine(sim_swift.robot.q), self.GrabCoord(), maxVel))
-            if self.ui.TrajectoryType_comboBox.currentText() == "mstraj":
-                self.ConsolePrint(f"{time.localtime()[3]}:{time.localtime()[4]}\t mstraj\t vel: {round(degrees(min(maxVel)))} deg / s")
-                sim_swift.SwiftVisualise(sim_swift.MultiSegmentTrajectory(sim_swift.robot.fkine(sim_swift.robot.q), self.GrabCoord(), maxVel))
-            if self.ui.TrajectoryType_comboBox.currentText() == "ctraj":
-                self.ConsolePrint(f"{time.localtime()[3]}:{time.localtime()[4]}\t ctraj\t vel: {round(degrees(min(maxVel)))} deg / s")
-                sim_swift.SwiftVisualise(sim_swift.CartesianTrajectory(sim_swift.robot.fkine(sim_swift.robot.q), self.GrabCoord(), cartGain))
-        self.RefreshCoord()
+            if self.ui.SimulatorSwitch_radioButton.isChecked():
+                if self.ui.TrajectoryType_comboBox.currentText() == "jtraj":
+                    self.ConsolePrint(f"{time.localtime()[3]}:{time.localtime()[4]}\t jtraj\t vel: {round(degrees(min(maxVel)))} deg / s")
+                    sim_swift.SwiftVisualise(sim_swift.JointTrajectory(sim_swift.robot.fkine(sim_swift.robot.q), self.GrabCoord(), maxVel))
+                if self.ui.TrajectoryType_comboBox.currentText() == "mstraj":
+                    self.ConsolePrint(f"{time.localtime()[3]}:{time.localtime()[4]}\t mstraj\t vel: {round(degrees(min(maxVel)))} deg / s")
+                    sim_swift.SwiftVisualise(sim_swift.MultiSegmentTrajectory(sim_swift.robot.fkine(sim_swift.robot.q), self.GrabCoord(), maxVel))
+                if self.ui.TrajectoryType_comboBox.currentText() == "ctraj":
+                    self.ConsolePrint(f"{time.localtime()[3]}:{time.localtime()[4]}\t ctraj\t vel: {round(degrees(min(maxVel)))} deg / s")
+                    sim_swift.SwiftVisualise(sim_swift.CartesianTrajectory(sim_swift.robot.fkine(sim_swift.robot.q), self.GrabCoord(), cartGain))
+            else:
+                memory_write = {
+                    "dsID":"www.hc-system.com.RemoteMonitor",
+                    "reqType": "command",
+                    "cmdData":
+                            ["rewriteDataList", "800","6","0", 
+                                str(round(self.ui.cart_X_doubleSpinBox.value() * 1000)), 
+                                str(round(self.ui.cart_Y_doubleSpinBox.value() * 1000)), 
+                                str(round(self.ui.cart_Z_doubleSpinBox.value() * 1000)), 
+                                str(round(self.ui.cart_Rx_SpinBox.value())), 
+                                str(round(self.ui.cart_Ry_SpinBox.value())), 
+                                str(round(self.ui.cart_Rz_SpinBox.value()))
+                            ]
+                }
+                self.TCP_send(memory_write)
+            self.RefreshCoord()
 
-    def GrabCoord(self):
+    def GrabCoord(self) -> SE3:
         target = SE3.Trans(
             self.ui.cart_X_doubleSpinBox.value() / 1000,
             self.ui.cart_Y_doubleSpinBox.value() / 1000,

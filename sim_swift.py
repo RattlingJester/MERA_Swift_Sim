@@ -2,6 +2,7 @@ import json
 import threading
 from os import path
 from math import degrees
+import debugpy
 
 import numpy as np
 import roboticstoolbox as rtb
@@ -55,9 +56,10 @@ qdmax = [3.142, 2.62, 3.93, 6.28, 3.93, 6.28] # Max speed
 stand_pose = SE3(0, 0, 0.6)# * SE3.OA([0, 1, 0], [0, 0, 1])
 
 def DrawRobot(traj: rtb_tools_trajectory.Trajectory):
+    debugpy.debug_this_thread()
     if isinstance(traj, rtb_tools_trajectory.Trajectory):
         JsonString = list(range(len(traj.q)))
-        # JsonString = np.zeros(shape=[len(traj.q)], dtype=str)
+
         for i in range(len(traj.q)): # Transforming
 
             JsonPoints["action"] = 10
@@ -99,6 +101,7 @@ def DrawRobot(traj: rtb_tools_trajectory.Trajectory):
 
 def refresh():
     threading.Timer(dt, refresh).start()
+    debugpy.debug_this_thread()
     env.step(dt)
 
 def StartSwift():

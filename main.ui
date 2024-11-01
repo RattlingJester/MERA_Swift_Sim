@@ -617,8 +617,8 @@
        <rect>
         <x>10</x>
         <y>20</y>
-        <width>211</width>
-        <height>71</height>
+        <width>205</width>
+        <height>70</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -646,6 +646,28 @@
          </property>
         </widget>
        </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="MotionType_label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Motion type:</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
        <item row="1" column="0">
         <widget class="QRadioButton" name="JointJogButton">
          <property name="sizePolicy">
@@ -667,28 +689,6 @@
          </property>
          <property name="checked">
           <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0" colspan="2">
-        <widget class="QLabel" name="MotionType_label">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>Motion type:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -1090,8 +1090,8 @@
      <widget class="QPushButton" name="LaunchButton">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>170</y>
+        <x>40</x>
+        <y>210</y>
         <width>161</width>
         <height>41</height>
        </rect>
@@ -1108,8 +1108,8 @@
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>50</x>
-        <y>100</y>
+        <x>60</x>
+        <y>140</y>
         <width>121</width>
         <height>61</height>
        </rect>
@@ -2078,6 +2078,38 @@
          </property>
          <property name="text">
           <string>Connect</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QFrame" name="frame">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>95</y>
+        <width>205</width>
+        <height>45</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Shape::Box</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Shadow::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_6">
+       <item row="0" column="0">
+        <widget class="QRadioButton" name="BorunteSwitch_radioButton">
+         <property name="text">
+          <string>Borunte</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QRadioButton" name="SimulatorSwitch_radioButton">
+         <property name="text">
+          <string>Simulator</string>
          </property>
         </widget>
        </item>
