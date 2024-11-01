@@ -1,0 +1,42 @@
+{
+    "en_US": {
+        "MotionType": "Motion type:",
+        "JointJog": "Joint jog",
+        "Trajectory": "Trajectory",
+        "TrajectoryType": "Trajectory type:",
+        "LaunchSim": "Launch sim",
+        "Axis_1": "Axis 1",
+        "Axis_2": "Axis 2",
+        "Axis_3": "Axis 3",
+        "Axis_4": "Axis 4",
+        "Axis_5": "Axis 5",
+        "Axis_6": "Axis 6",
+        "SendButton": "Send",
+        "Home": "Home",
+        "Velocity": "Velocity",
+        "ToolPos": "Tool position:",
+        "JointAngle": "Joint angle:",
+        "Log": "Log",
+        "LogSendButton": "Send" 
+    },
+    "ru_RU": {
+        "MotionType": "Тип движения:",
+        "JointJog": "Углы",
+        "Trajectory": "Траектория",
+        "TrajectoryType": "Тип траектории:",
+        "LaunchSim": "Запустить симулятор",
+        "Axis_1": "Ось 1",
+        "Axis_2": "Ось 2",
+        "Axis_3": "Ось 3",
+        "Axis_4": "Ось 4",
+        "Axis_5": "Ось 5",
+        "Axis_6": "Ось 6",
+        "SendButton": "Отправить",
+        "Home": "Домой",
+        "Velocity": "Скорость",
+        "ToolPos": "Позиция инструмента:",
+        "JointAngle": "Углы осей:",
+        "Log": "Журнал",
+        "LogSendButton": "Отправить" 
+    }
+}
