@@ -697,7 +697,7 @@
      <widget class="QFrame" name="frame_CartesianCoordinates">
       <property name="geometry">
        <rect>
-        <x>290</x>
+        <x>320</x>
         <y>260</y>
         <width>651</width>
         <height>81</height>
@@ -1072,7 +1072,7 @@
      <widget class="QPushButton" name="SendButton">
       <property name="geometry">
        <rect>
-        <x>330</x>
+        <x>410</x>
         <y>360</y>
         <width>351</width>
         <height>41</height>
@@ -1091,7 +1091,7 @@
       <property name="geometry">
        <rect>
         <x>40</x>
-        <y>210</y>
+        <y>220</y>
         <width>161</width>
         <height>41</height>
        </rect>
@@ -1109,7 +1109,7 @@
       <property name="geometry">
        <rect>
         <x>60</x>
-        <y>140</y>
+        <y>150</y>
         <width>121</width>
         <height>61</height>
        </rect>
@@ -1772,7 +1772,7 @@
      <widget class="QPushButton" name="HomeButton">
       <property name="geometry">
        <rect>
-        <x>760</x>
+        <x>810</x>
         <y>360</y>
         <width>161</width>
         <height>41</height>
@@ -1996,9 +1996,9 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>260</y>
+        <y>269</y>
         <width>270</width>
-        <height>210</height>
+        <height>201</height>
        </rect>
       </property>
       <property name="frameShape">

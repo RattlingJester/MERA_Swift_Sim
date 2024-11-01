@@ -58,7 +58,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Костыли:
         self.ui.TrajectoryMotionButton.toggle()
-        self.ui.SimulatorSwitch_radioButton.toggle()
+        self.ui.BorunteSwitch_radioButton.toggle()
         self.ui.Velocity_label.setText(str(self.ui.Velocity_slider.value()) + " %")
         self.connected = False
 
@@ -138,20 +138,38 @@ class MainWindow(QtWidgets.QMainWindow):
                     self.ConsolePrint(f"{time.localtime()[3]}:{time.localtime()[4]}\t ctraj\t vel: {round(degrees(min(maxVel)))} deg / s")
                     sim_swift.SwiftVisualise(sim_swift.CartesianTrajectory(sim_swift.robot.fkine(sim_swift.robot.q), self.GrabCoord(), cartGain))
             else:
-                memory_write = {
-                    "dsID":"www.hc-system.com.RemoteMonitor",
-                    "reqType": "command",
-                    "cmdData":
-                            ["rewriteDataList", "800","6","0", 
-                                str(round(self.ui.cart_X_doubleSpinBox.value() * 1000)), 
-                                str(round(self.ui.cart_Y_doubleSpinBox.value() * 1000)), 
-                                str(round(self.ui.cart_Z_doubleSpinBox.value() * 1000)), 
-                                str(round(self.ui.cart_Rx_SpinBox.value())), 
-                                str(round(self.ui.cart_Ry_SpinBox.value())), 
-                                str(round(self.ui.cart_Rz_SpinBox.value()))
-                            ]
-                }
-                self.TCP_send(memory_write)
+                if self.ui.TrajectoryType_comboBox.currentText() == "jtraj":
+                    traj_end_q = sim_swift.JointTrajectory(sim_swift.robot.fkine(sim_swift.robot.q), self.GrabCoord(), maxVel).q[-1]
+                    memory_write = {
+                        "dsID":"www.hc-system.com.RemoteMonitor",
+                        "reqType": "command",
+                        "cmdData":
+                                ["rewriteDataList", "800","6","0", 
+                                    str(round(degrees(traj_end_q[0]) * 1000)), 
+                                    str(round(degrees(traj_end_q[1]) * 1000)), 
+                                    str(round(degrees(traj_end_q[2]) * 1000)), 
+                                    str(round(degrees(traj_end_q[3]) * 1000)), 
+                                    str(round(degrees(traj_end_q[4]) * 1000)), 
+                                    str(round(degrees(traj_end_q[5]) * 1000))
+                                ]
+                    }
+                    self.TCP_send(memory_write)
+
+                if self.ui.TrajectoryType_comboBox.currentText() == "ctraj":
+                    memory_write = {
+                        "dsID":"www.hc-system.com.RemoteMonitor",
+                        "reqType": "command",
+                        "cmdData":
+                                ["rewriteDataList", "800","6","0", 
+                                    str(round(self.ui.cart_X_doubleSpinBox.value() * 1000)), 
+                                    str(round(self.ui.cart_Y_doubleSpinBox.value() * 1000)), 
+                                    str(round(self.ui.cart_Z_doubleSpinBox.value() * 1000)), 
+                                    str(round(self.ui.cart_Rx_SpinBox.value())), 
+                                    str(round(self.ui.cart_Ry_SpinBox.value())), 
+                                    str(round(self.ui.cart_Rz_SpinBox.value()))
+                                ]
+                    }
+                    self.TCP_send(memory_write)
             self.RefreshCoord()
 
     def GrabCoord(self) -> SE3:
