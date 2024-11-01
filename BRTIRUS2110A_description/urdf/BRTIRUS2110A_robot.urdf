@@ -43,7 +43,7 @@
     <origin 
       rpy="0 0 0" 
       xyz="0 0 0"/>
-    <axis xyz="0 1 0"/>
+    <axis xyz="0 0 1"/>
     <!-- This is descibed in child frame -->
     <limit effort="1000.0" lower="-3.14159265" upper="3.14159265" velocity="0"/>
   </joint>
@@ -106,7 +106,7 @@
     <origin 
       rpy="0 0 0"
       xyz="0.2805 0 0.1"/>
-    <axis xyz="0 0 1"/>
+    <axis xyz="1 0 0"/>
     <limit effort="1000.0" lower="-1.570796325" upper="1.570796325" velocity="0"/>
   </joint>
   <link name="link6">
@@ -125,8 +125,8 @@
     <child link="link6"/>
     <origin 
       rpy="1.57079632679 0 0"
-      xyz="0 0 0.198"/>
-    <axis xyz="1 0 0"/>
+      xyz="0.829 0 0"/>
+    <axis xyz="0 0 1"/>
     <limit effort="1000.0" lower="-1.570796325" upper="1.570796325" velocity="0"/>
   </joint>
   <link name="link7">
@@ -135,8 +135,8 @@
         <mesh filename="package://BRTIRUS2110A_description/meshes/link6.stl"/>
       </geometry>
       <origin 
-        rpy="0 0 0"
-        xyz="0 0 0.0075"/>
+        rpy="0 1.57079632679 0"
+        xyz="0 0 0"/>
       <material name="blue"/>
     </visual>
   </link>
@@ -144,9 +144,9 @@
     <parent link="link6"/>
     <child link="link7"/>
     <origin 
-      rpy="1.57079632679 0 0"
-      xyz="0 0.107 0"/>
-    <axis xyz="0 0 1"/>
+      rpy="0 0 0"
+      xyz="0.097 0 0"/>
+    <axis xyz="1 0 0"/>
     <limit effort="1000.0" lower="-3.14159265359" upper="3.14159265359" velocity="0"/>
   </joint>
   <!-- <link name="link_gripper_body">
